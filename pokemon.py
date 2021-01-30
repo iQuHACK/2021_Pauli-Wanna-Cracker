@@ -28,8 +28,6 @@ def u_hat(theta, phi):
 
 d_hat = u_hat(np.pi, 0)
 
-q_hat = u_hat(0, np.pi / 2)
-
 alice_hp = 100
 bob_hp = 100
 
@@ -80,9 +78,8 @@ def loop():
     global GAMMA
 
     qc = QuantumCircuit(2)
-    j_hat = np.matrix(scipy.linalg.expm(
-        np.kron(-1j * GAMMA * d_hat, d_hat / 2)))
-    qc.unitary(Operator(j_hat), [0, 1], label="")
+    qc.h(0)
+    qc.cnot(0, 1)
 
     def defect(q):
         qc.x(q)
@@ -136,7 +133,11 @@ def loop():
 
     prompt(0)
     prompt(1)
-    qc.unitary(Operator(j_hat.H), [0, 1], label="")
+    qci = QuantumCircuit(2)
+    qci.h(0)
+    qci.cnot(0, 1)
+    qci.inverse()
+    qc.append(qci, [0, 1], [])
     print(qc)
 
     backend = Aer.get_backend('statevector_simulator')
@@ -152,6 +153,7 @@ def loop():
         alice_exp += prob * alice
         bob_exp += prob * bob
 
+    print("alice {}, bob {}".format(alice_exp, bob_exp))
     if alice_exp == bob_exp:
         print("It's a draw!")
         bob_hp += bob_exp
