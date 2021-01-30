@@ -18,7 +18,7 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 
-GAMMA = 0
+GAMMA = np.pi / 2
 
 
 def u_hat(theta, phi):
@@ -133,11 +133,8 @@ def loop():
 
     prompt(0)
     prompt(1)
-    qci = QuantumCircuit(2)
-    qci.h(0)
-    qci.cnot(0, 1)
-    qci.inverse()
-    qc.append(qci, [0, 1], [])
+    qc.cnot(0, 1)
+    qc.h(0)
     print(qc)
 
     backend = Aer.get_backend('statevector_simulator')
@@ -170,7 +167,7 @@ def loop():
         alice_hp -= bob_exp - alice_exp
 
     friendliness = min(abs(alice_hp - bob_hp) / 50, 1)
-    GAMMA = friendliness * np.pi / 2
+    # GAMMA = friendliness * np.pi / 2
     print("Friendliness now {:.2f}".format(friendliness))
 
     print(bcolors.WARNING + "{} HP: {:.2f}, {} HP: {:.2f}".format(alice_name,
