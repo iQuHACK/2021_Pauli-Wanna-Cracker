@@ -1,3 +1,24 @@
+# [Project Name]
+
+## Introduction
+
+
+## Rules of the Game
+
+
+## Notable Results
+
+
+## Citations
+
+
+## Next Steps
+
+
+
+
+_______________________________ Getting Started (Help Info)  _______________________________
+
 # Welcome to iQuHACK 2021!
 Check out some info in the [event's repository](https://github.com/iQuHACK/2021) to get started.
 
