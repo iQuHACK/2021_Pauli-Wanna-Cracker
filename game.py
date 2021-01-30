@@ -5,6 +5,7 @@ from qiskit.quantum_info import Operator
 import time
 import numpy as np
 import scipy
+import random
 
 API_KEY = open("api.env", "r").read().strip()
 provider = IonQProvider(token=API_KEY)
@@ -12,26 +13,29 @@ provider = IonQProvider(token=API_KEY)
 bank_account = []
 ledger = {}
 
-
-def measure(qubit, basis):
-    coin_flip = random(0.5)
+def measure_qubit(qubit, basis):
+    coin_flip = random.choice([True,False])
     if basis == "0/1" and qubit in ('+', '-'):
         return '0' if coin_flip else '1'
     elif basis == "+/-" and qubit in ('0', '1'):
         return '+' if coin_flip else '-'
     return qubit
 
-
 class State:
     def __init__(self, bitstring):
         self.bitstring = bitstring
+
+    def measure(i, basis):
+        self.bitstring[i] = measure_qubit(self.bitstring[i], basis)
+        
 class Bill:
     def __init__(self, serial_number, state):
         self.serial_number = serial_number
         self.state = state
 
-def verify_with_bank(serial_number, state_qc):
-    pass
+def verify_with_bank(bill):
+    for i in range(len(bill.state.bitstring)):
+        if (bill.state.measure(i) == ledge
 
 def measure_bit(serial_number, q_i):
     pass
