@@ -78,8 +78,9 @@ def loop():
     global GAMMA
 
     qc = QuantumCircuit(2)
-    qc.h(0)
-    qc.cnot(0, 1)
+    qc.x(0)
+    qc.z(0)
+    qc.y(1)
 
     def defect(q):
         qc.x(q)
@@ -133,8 +134,9 @@ def loop():
 
     prompt(0)
     prompt(1)
-    qc.cnot(0, 1)
-    qc.h(0)
+    qc.z(0)
+    qc.x(0)
+    qc.y(1)
     print(qc)
 
     backend = Aer.get_backend('statevector_simulator')
