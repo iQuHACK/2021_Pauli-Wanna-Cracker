@@ -55,7 +55,7 @@ random.shuffle(OPERATIONS)
 
 def rand_gate():
     gate = ''
-    for i in range(random.randint(0, 4)):
+    for i in range(random.randint(1, 4)):
         gate += OPERATIONS[i]
     return gate
 
@@ -82,7 +82,7 @@ def loop():
     qc = QuantumCircuit(2)
     j_hat = np.matrix(scipy.linalg.expm(
         np.kron(-1j * GAMMA * d_hat, d_hat / 2)))
-    qc.unitary(Operator(j_hat), [0, 1], label="j_hat")
+    qc.unitary(Operator(j_hat), [0, 1], label="")
 
     def defect(q):
         qc.x(q)
@@ -136,7 +136,7 @@ def loop():
 
     prompt(0)
     prompt(1)
-    qc.unitary(Operator(j_hat.H), [0, 1], label="j_hat*")
+    qc.unitary(Operator(j_hat.H), [0, 1], label="")
     print(qc)
 
     backend = Aer.get_backend('statevector_simulator')
