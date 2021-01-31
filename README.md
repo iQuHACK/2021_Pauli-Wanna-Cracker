@@ -8,8 +8,9 @@ In the lush quantum fields of Shor Town, your laid-back, classical lifestyle has
 local realism-violating abilities! You make fast friends with some of them, but the others threaten to entangle themselves in your affairs.
 Do you have what it takes to become master of quantum gates and measure 'em all?
 ## Introduction
-Game theory in its essence is communication of information between different parties. Classical game theory is a well established field, where the solutions are well-known. With the advent of quantum communication, we now have access to alternative solutions to these games. The ability to have entanglement in the initial states, and superposition of strategies on the initial states, makes game theory more interesting. Here we explore the quantum version of the classical prisoner's dilemma.
-In classical prisoner's dilemma, the two parties choose to protect themselves, in other words maximize their gain (payoff) at the expense of the other participant. The catch is that even though it appears as the most optimal strategy to both parties, they end up doing worse. In [1] it has been showed that both parties can escape if they both use quantum strategies, which are quantum resources such as entanglement under unitary rotations. In particular, a "supercooperation" strategy emerges which is a Nash equilibrium in highly entangled games. Through our game we demonstrate a behavior where if both parties use quantum startegies, they can attain a higher payoff compared to their classical counterparts.
+* Theoretical developments in quantum computing
+* Classical game theory - the prisoner's dilemma problem
+* Motivation: demonstrating the extra power of quantum systems when applied to traditional problems (supercooperation), in a fun way
 
 ## How to Play
 * Two players are each assigned a "quantumon" which they control every round. Remember which one is yours!
@@ -45,54 +46,64 @@ dottum_0: ┤1            ├┤ X ├┤ Y ├─────┤1        ├
 * In practice, when entanglement is high, "Befriend" produces very interesting quantum effects. For example, the opponent's attack on a player who is choosing to "Befriend" may be reflected back on them. "Heal" can have unintuitive behavior against "Befriend", even possibly causing damage!
 
 ## Notable Results
-
-* While the game is initially identical to the classical prisoner's dilemma, as the game progresses, the rules and optimal moves become increasingly quantum. Although they don't know it, the players are essentially building entangled quantum circuits by playing the game. For players who have not worked with quantum systems before, this provides a gentle exposure to quantum mechanics in a fun and educational manner.
-* The "supercooperation" feature of the game demonstrates the power of quantum mechanics when added to a classical system. In the classical version of the game, if an opponent chooses to "defect", the player can only choose to "cooperate" - thereby suffering a large loss - or "defect" in return - thereby causing punishing both players. However, with the intermediary quantum option of "supercooperation", it is possible to respond in a way that buffers the negative effect of an opponent who chooses to "defect" while simulatenously retaining a positive effect when an opponent chooses to "cooperate". As a result, this opens up new avenues for gameplay and provides it with greater depth.
-
+* Exploration of supercooperation
+* Running the circuit on different backends/simulators
+*
 
 
 ## Next Steps
-
-* IonQ backend compatibility: The game implements the mechanics of Prisoners' Dilemma as given in [arXiv:quant-ph/9806088](https://arxiv.org/abs/quant-ph/9806088), which uses the exponential of a two qubit gate. This cannot be directly implemented on IonQ, so, at the moment, we are running our game on the Qiskit simulator. However, [arXiv:quant-ph/0308006](https://arxiv.org/abs/quant-ph/0308006) provides means to write arbitrary two qubit gates in the form of elementary gates. Also, [arXiv:quant-ph/0007038](https://arxiv.org/abs/quant-ph/0007038) provides a slightly different implementation of the Prisoners' Dilemma which might be easier to decompose into elementary gates. One of these strategies can be adopted to make this game compatible with the IonQ backend.
+* IonQ backend compatibility: The game implements the mechanics of Prisoners' Dilemma as given in [arXiv:quant-ph/9806088](https://arxiv.org/abs/quant-ph/9806088), which uses the exponential of a two qubit gate. This cannot be directly implemented on IonQ, so, at the moment, we are running our game on the Qiskit simulator. However, [arXiv:quant-ph/0308006](https://arxiv.org/abs/quant-ph/0308006) provides means to write arbitarary two qubit gates in the form of elementary gates. Also, [arXiv:quant-ph/0007038](https://arxiv.org/abs/quant-ph/0007038) provides a slightly differnet implementation of the Prisoners' Dilemma which might be easier to decompose into elementary gates. One of these strategies can be adopted to make this game compatible with the IonQ backend.
+* []
 
 ## Citations
-
-1. Eisert, Jens, Martin Wilkens, and Maciej Lewenstein. "Quantum games and quantum strategies." Physical Review Letters 83.15 (1999): 3077. [arXiv:quant-ph/9806088](https://arxiv.org/abs/quant-ph/9806088)
-2. Li, Angsheng, and Xi Yong. "[Entanglement guarantees emergence of cooperation in quantum prisoner's dilemma games on networks.](https://www.nature.com/articles/srep06286)" Scientific reports 4.1 (2014): 1-7
 
 
 # Wiesner's Thievers: Fake It 'Til You Make It!
 
 Wiesnerville has a counterfeiting problem. Luckily, the new mayor, a part-time quantum scientist, thinks they have a solution: quantum money. Since the no-cloning theorem prevents copying quantum states, if we put one in every dollar bill, bye bye counterfeits! Right? In this game, you work through various levels of increasing difficulty and try to cheat the bank out of as much money as you can without getting caught. Will you get away with it?
 ## Introduction
-* Theoretical developments in quantum computing
-* Classical game theory - the prisoner's dilemma problem
-* Motivation: demonstrating the extra power of quantum systems when applied to traditional problems (supercooperation), in a fun way
+
 
 ## Rules of the Game
-*
+* There are multiple levels. In each one, you start off with a few dollar bills you found on the ground, and your goal is to increase your net_worth to some dollar figure by getting bills approved by the bank. 
+
+* You are presented with a series of menus. You can select a bill and then choose to 
+  1. Make a copy with the same serial number and your choice of qubits 
+  2. Measure a specific qubit from the bill
+  3. Send the bill to the bank for verification
+  
+* If you send a bill to the bank and it is approved, your net worth goes up by that bill's value and you lose the bill. If it is denied, various things happen depending on the level: you might initially get it back, but by the end of it, you get fresh bills back and you go to jail after a limited number of failures.
+
+We planned on having 5 levels:
+* Level 0: One qubit on each bill, centralized bank returns invalidated bills, unlimited attempts
+  * Encouraged attack: guess qubit state
+  
+* Level 1: Many qubits, centralized bank returns invalidated bills, unlimited attempts
+  * Encouraged attack: use information from changes due to bank measurement to determine state with certainty
+  
+* Level 2: Many qubits, centralized bank returns invalidated bills, limited wrong attempts
+  * Encouraged attack: same but more carefully
+  
+* Level 3: Many qubits, centralized bank destroys invalidated bills and returns fresh bills, one wrong attempt
+  * Encouraged attack: The Elizer Vaideman Bomb attack using R_theta gates with the user's choice of theta
+  
+* Level 4: Many qubits, public key money, one wrong attempt
+  * Last resort level - do you take the risk and try your luck at breaking cryptographic problems, or do you retire in comfort with what you have?
 
 ## Inner Workings
 * Ideally, we would have liked to implement this using Qiskit, but the language provides no simple way of storing and moving quantum states between circuits. Qiskit is made for predefining circuits and then running them; we needed to make measurements on the fly as the user gave input. Because of this, we use simple simulation with numpy matrices and vectors.
+
 * For the most part, our qubits stay in 4 basic states: |0>, |1>, |+>, and |->. To simulate these, we have a Qubit class which stores state as a numpy vector. This class has a method to measure and probabilistically collapse a state. To simulate a measurement in another basis, you specify a change of basis to perform before and after the measurement.
+
 * The bank is represented by a ledger and a single verification function
+
 * Then, the majority of the code manages the user interface, providing educational menu selections and alerts for the user to respond to.
+
 ## Notable Results
-*
+* 
 
 ## Next Steps
-We planned on having 6 levels:
-* Level 0: One qubit on each bill, centralized bank returns invalidated bills, unlimited attempts
-  * Encouraged attack: guess qubit state
-* Level 1: Many qubits, centralized bank returns invalidated bills, unlimited attempts
-  * Encouraged attack: use information from changes due to bank measurement to determine state with certainty
-* Level 2: Many qubits, centralized bank returns invalidated bills, limited wrong attempts
-  * Encouraged attack: same but more carefully
-* Level 3: Many qubits, centralized bank destroys invalidated bills and returns fresh bills, unlimited attempts
-  * Encouraged attack: The Elizer Vaideman Bomb attack using R_theta gates with the user's choice of theta
-* Level 4: Many qubits, public key money
-* Level 5: Last resort level - do you take the risk and try your luck at breaking cryptographic problems, or do you retire in comfort with what you have?
-Our next steps would be fully realizing all 6 levels, increasing the value of the bills being conterfeited until you're a millionaire.
+Our next steps would be fully realizing all 6 levels, increasing the value of the bills being conterfeited until you're a millionaire. We especially wanted to make it possible for the player to come up with the EV Bomb attack by leading them to the solution as they ran out of bills.
 
 ## Citations
 * https://www.scottaaronson.com/qclec.pdf
