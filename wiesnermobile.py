@@ -114,12 +114,13 @@ def alert(prompt, end='[Press ENTER to continue] '):
         sys.exit()
     return result
 
-def selection(prompt, options=[], is_qubit_selection=0):
+def selection(prompt, options=[], num_items=0):
     print_lines(prompt)
 
-    if is_qubit_selection:
-        print_lines(f"[Enter a number between 1 and {is_qubit_selection}]")
+    if num_items:
+        print_lines(f"[Enter a number between 1 and {num_items}]")
     else:
+        num_items = len(options)
         for i, o in enumerate(options):
             print_lines("[{}] {}".format(i + 1, o))
 
@@ -131,7 +132,7 @@ def selection(prompt, options=[], is_qubit_selection=0):
 
         try:
             i = int(result) - 1
-            if i < 0 or i >= len(options):
+            if i < 0 or i >= num_items:
                 print_lines("Please enter a valid option number.")
                 continue
             return i
@@ -179,11 +180,12 @@ def copy_bill(bill):
 def measure_bill(bill):
     qubit_index = 0
     if len(bill.state) > 1:
-        qubit_index = selection("Which qubit do you want to measure?", len(bill.state))
+        qubit_index = selection("Which qubit do you want to measure?", num_items=len(bill.state))
 
     basis = selection("What basis do you want to measure in?",["{|0>,|1>}","{|+>,|->}"])
 
     print_lines(f"Measuring qubit #{qubit_index+1} in bill #{bill.serial_number}...")
+    time.sleep(1)
     is_oneish = bill.state[qubit_index].measure(H_GATE if basis else I_GATE)
     alert(f"Result: {BASIC_KET_STRINGS[basis*2 + is_oneish]}")
 
@@ -218,9 +220,9 @@ def inspect_bill(bill):
     choice = selection(f"What would you like to do with Bill #{bill.serial_number}?", bill_options)
     bill_actions[choice](bill)
 
-def run_level(level_threshold):
+def run_level(goal):
     global first_time_success
-    while net_worth < level_threshold:
+    while net_worth < goal:
         print_lines(f"Your net worth: ${net_worth}." + first_time_success*" (This only goes up when you verify a bill with the bank.)")
         bill_index = selection("Choose a bill to take a closer look:", wallet)
         inspect_bill(wallet[bill_index])
@@ -228,10 +230,19 @@ def run_level(level_threshold):
     
 def play():
     welcome_message()
+
     for _ in range(3):
         wallet.append(mint_bill(1,1))
     level0_intro()
     run_level(10)
+
+    for _ in range(2):
+        wallet.append(mint_bill(5,10))
     level1_intro()
+    run_level(50)
+
+    #level 2 intro should explain the EV attack (or after first failure)
+    #user gets to choose epsilon (take a risk? or take your time?)
+
 
 play()
