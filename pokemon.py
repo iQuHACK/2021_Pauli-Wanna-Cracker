@@ -4,6 +4,7 @@ import numpy as np
 import scipy
 import random
 import sys
+import time
 
 
 class bcolors:
@@ -62,14 +63,25 @@ OPTION_NAMES = ["Growl", "Tackle", "Scratch", "Slash", "Bite", "Charm"]
 rand_gates = {g: rand_gate() for g in OPTION_NAMES}
 
 
+def crawl(s):
+    for letter in s:
+        sys.stdout.write(letter)
+        sys.stdout.flush()
+        time.sleep(.02)
+    print("")
+
+
 def game_over():
+    print("")
     if alice_hp > bob_hp:
-        print("{} wins!".format(alice_name))
+        crawl("{} fainted!".format(bob_name))
+        crawl("{} wins!".format(alice_name))
     elif bob_hp > alice_hp:
-        print("{} wins!".format(bob_name))
+        crawl("{} fainted!".format(alice_name))
+        crawl("{} wins!".format(bob_name))
     else:
-        print("It's a draw!")
-    print("Please play again!")
+        crawl("It's a draw!")
+    crawl("Please play again!")
 
 
 def loop():
@@ -81,7 +93,7 @@ def loop():
                         QuantumRegister(1, bob_name.lower()))
     j_hat = np.matrix(scipy.linalg.expm(
         np.kron(-1j * GAMMA * d_hat, d_hat / 2)))
-    qc.unitary(Operator(j_hat), [0, 1], label="")
+    qc.unitary(Operator(j_hat), [0, 1], label="Friendship")
 
     def defect(q):
         qc.x(q)
@@ -121,23 +133,26 @@ def loop():
                 i = int(result) - 1
                 if i == 0:
                     defect(q)
-                    return "defected"
+                    return "Fight"
                 elif i == 1:
-                    return "cooperated"
+                    return "Heal"
                 elif i == 2:
                     quantum(q)
-                    return "quantum"
+                    return "Befriend"
                 else:
                     exec_gate(q, rand_gates[options[i - 3]])
-                    return "defected"
+                    return options[i - 3]
             except (ValueError, IndexError):
                 print("Please enter an option number.")
                 continue
 
     alice_move = prompt(0)
     bob_move = prompt(1)
-    qc.unitary(Operator(j_hat.H), [0, 1], label="")
+    qc.unitary(Operator(j_hat.H), [0, 1], label="Battle")
     print(qc)
+
+    crawl("{} used {}!".format(alice_name, alice_move))
+    crawl("{} used {}!".format(bob_name, bob_move))
 
     backend = Aer.get_backend('statevector_simulator')
     job = execute(qc, backend)
@@ -152,44 +167,56 @@ def loop():
         alice_exp += prob * alice
         bob_exp += prob * bob
 
-    if alice_move != bob_move and (alice_move == "defected" and alice_exp < bob_exp or bob_move == "defected" and bob_exp < alice_exp):
-        print(bcolors.OKCYAN + bcolors.BOLD +
+    if alice_move == "Befriend" and bob_move not in ("Befriend", "Heal") and alice_exp > bob_exp or bob_move == "Befriend" and alice_move not in ("Befriend", "Heal") and bob_exp > alice_exp:
+        crawl(bcolors.OKCYAN + bcolors.BOLD +
               "It's the power of friendship!" + bcolors.ENDC)
 
     if alice_exp == bob_exp:
         if alice_exp > 0:
-            print(bcolors.OKGREEN +
+            crawl(bcolors.OKGREEN +
                   "It's a draw! Both sides heal {:.2f} damage!".format(alice_exp) + bcolors.ENDC)
         else:
-            print(
+            crawl(
                 bcolors.FAIL + "It's a draw! Both sides take {:.2f} damage!".format(abs(alice_exp)) + bcolors.ENDC)
         bob_hp += bob_exp
         alice_hp += alice_exp
         bob_hp = min(bob_hp, 100)
         alice_hp = min(alice_hp, 100)
     elif alice_exp > bob_exp:
-        print(bcolors.FAIL + "{} hits {} for {:.2f} damage!".format(
+        crawl(bcolors.FAIL + "{} hits {} for {:.2f} damage!".format(
             alice_name, bob_name, alice_exp - bob_exp) + bcolors.ENDC)
         bob_hp -= alice_exp - bob_exp
     else:
-        print(bcolors.FAIL + "{} hits {} for {:.2f} damage!".format(
+        crawl(bcolors.FAIL + "{} hits {} for {:.2f} damage!".format(
             bob_name, alice_name, bob_exp - alice_exp) + bcolors.ENDC)
         alice_hp -= bob_exp - alice_exp
 
-    friendliness = min(max(abs(alice_hp - bob_hp) / 50,
-                           1 - max(alice_hp, bob_hp) / 50), 1)
-    GAMMA = friendliness * np.pi / 2
-    print("Friendliness now {:.2f}".format(friendliness))
-
-    print(bcolors.WARNING + "{} HP: {:.2f}, {} HP: {:.2f}".format(alice_name,
-                                                                  alice_hp, bob_name, bob_hp) + bcolors.ENDC)
     if alice_hp <= 0 or bob_hp <= 0:
         game_over()
         sys.exit(0)
 
+    print("")
+
+    friendliness = min(max(abs(alice_hp - bob_hp) / 50,
+                           1 - max(alice_hp, bob_hp) / 50), 1)
+    GAMMA = friendliness * np.pi / 2
+    if friendliness < 0.1:
+        crawl("It's like an awkward first encounter...")
+    elif friendliness < 0.3:
+        crawl("Have these two met before?")
+    elif friendliness < 0.5:
+        crawl("Feels like an old reunion.")
+    elif friendliness < 0.7:
+        crawl("Friendship is in the air!")
+    else:
+        crawl("You can feel friendship all around you!")
+
+    crawl(bcolors.WARNING + "{} HP: {:.2f}, {} HP: {:.2f}".format(alice_name,
+                                                                  alice_hp, bob_name, bob_hp) + bcolors.ENDC)
+
 
 try:
-    print(bcolors.OKGREEN + bcolors.BOLD +
+    crawl(bcolors.OKGREEN + bcolors.BOLD +
           "A wild quantum state appeared!\n{} VS {}".format(alice_name, bob_name) + bcolors.ENDC)
     while True:
         loop()
