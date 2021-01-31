@@ -54,6 +54,9 @@ dottum_0: ┤1            ├┤ X ├┤ Y ├─────┤1        ├
 ## Next Steps
 
 * IonQ backend compatibility: The game implements the mechanics of Prisoners' Dilemma as given in [arXiv:quant-ph/9806088](https://arxiv.org/abs/quant-ph/9806088), which uses the exponential of a two qubit gate. This cannot be directly implemented on IonQ, so, at the moment, we are running our game on the Qiskit simulator. However, [arXiv:quant-ph/0308006](https://arxiv.org/abs/quant-ph/0308006) provides means to write arbitrary two qubit gates in the form of elementary gates. Also, [arXiv:quant-ph/0007038](https://arxiv.org/abs/quant-ph/0007038) provides a slightly different implementation of the Prisoners' Dilemma which might be easier to decompose into elementary gates. One of these strategies can be adopted to make this game compatible with the IonQ backend.
+* Optimizing gameplay: Ideally, we would spend more time experimenting with the game to find optimal values of the internal parameters to balance gameplay for both players (potentially compensating for certain “overpowered” strategies).
+* More intricate battle system: To make the game more interesting, the moves aside from “Fight”, “Heal”, and “Befriend” could be given additional effects. For example, they might boost the damage dealt by “Fight”, heal additional health, or alter the “friendliness” parameter directly.
+
 
 ## Citations
 
