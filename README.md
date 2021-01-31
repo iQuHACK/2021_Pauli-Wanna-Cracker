@@ -84,6 +84,7 @@ Now, your job is to get filthy rich. You found a few dollars on the floor and yo
   1. Make a copy with the same serial number and your choice of qubits 
   2. Measure a specific qubit from the bill
   3. Send the bill to the bank for verification
+  3. Discard the bill
   
 * If you send a bill to the bank and it is approved, your net worth goes up by that bill's value and you lose the bill. If it is denied, various things happen depending on the level: you might initially get it back, but by the end of it, you get fresh bills back and you go to jail after a limited number of failures.
 
@@ -105,8 +106,11 @@ We planned on having 5 levels:
 
 ## Inner Workings
 * Ideally, we would have liked to implement this using Qiskit, but the language provides no simple way of storing and moving quantum states between circuits. Qiskit is made for predefining circuits and then running them; we needed to make measurements on the fly as the user gave input. Because of this, we use simple simulation with numpy matrices and vectors.
+
 * For the most part, our qubits stay in 4 basic states: |0>, |1>, |+>, and |->. To simulate these, we have a Qubit class which stores state as a numpy vector. This class has a method to measure and probabilistically collapse a state. To simulate a measurement in another basis, you specify a change of basis to perform before and after the measurement.
+
 * The bank is represented by a ledger and a single verification function
+
 * Then, the majority of the code manages the user interface, providing educational menu selections and alerts for the user to respond to.
 
 ## Notable Results

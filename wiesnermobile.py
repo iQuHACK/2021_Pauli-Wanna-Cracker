@@ -207,12 +207,13 @@ bill_options = [
     "Print a copy with the same serial number",
     "Measure a qubit",
     "Cash it out at the bank (This will increase your net worth, but you will no longer have the bill if it is validated.)",
-    
+    "Discard bill"
 ]
 bill_actions = [
     lambda bill: copy_bill(bill),
     lambda bill: measure_bill(bill),
     lambda bill: verify_bill(bill),
+    lambda bill: wallet.remove(bill)
 ]
 
 def inspect_bill(bill):
