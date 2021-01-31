@@ -67,7 +67,7 @@ Wiesnerville has a counterfeiting problem. Luckily, the new mayor, a part-time q
 * Motivation: demonstrating the extra power of quantum systems when applied to traditional problems (supercooperation), in a fun way
 
 ## Rules of the Game
-* 
+*
 
 ## Inner Workings
 * Ideally, we would have liked to implement this using Qiskit, but the language provides no simple way of storing and moving quantum states between circuits. Qiskit is made for predefining circuits and then running them; we needed to make measurements on the fly as the user gave input. Because of this, we use simple simulation with numpy matrices and vectors.
@@ -75,7 +75,7 @@ Wiesnerville has a counterfeiting problem. Luckily, the new mayor, a part-time q
 * The bank is represented by a ledger and a single verification function
 * Then, the majority of the code manages the user interface, providing educational menu selections and alerts for the user to respond to.
 ## Notable Results
-* 
+*
 
 ## Next Steps
 We planned on having 6 levels:
@@ -89,26 +89,8 @@ We planned on having 6 levels:
   * Encouraged attack: The Elizer Vaideman Bomb attack using R_theta gates with the user's choice of theta
 * Level 4: Many qubits, public key money
 * Level 5: Last resort level - do you take the risk and try your luck at breaking cryptographic problems, or do you retire in comfort with what you have?
-Our next steps would be fully realizing all 6 levels, increasing the value of the bills being conterfeited until you're a millionaire. 
+Our next steps would be fully realizing all 6 levels, increasing the value of the bills being conterfeited until you're a millionaire.
 
 ## Citations
 * https://www.scottaaronson.com/qclec.pdf
 
-
-_______________________________ Getting Started (Help Info)  _______________________________
-
-# Welcome to iQuHACK 2021!
-Check out some info in the [event's repository](https://github.com/iQuHACK/2021) to get started.
-
-Having a README in your team's repository facilitates judging. A good README contains:
-* a clear title for your project,
-* a short abstract,
-* the motivation/goals for your project,
-* a description of the work you did, and
-* proposals for future work.
-
-You can find a potential README template in [one of last year's projects](https://github.com/iQuHACK/QuhacMan).
-
-Feel free to contact the staff with questions over our [event's slack](https://iquhack.slack.com), or via iquhack@mit.edu.
-
-Good luck!
