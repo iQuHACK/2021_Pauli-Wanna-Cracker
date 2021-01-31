@@ -70,29 +70,42 @@ Wiesnerville has a counterfeiting problem. Luckily, the new mayor, a part-time q
 * Motivation: demonstrating the extra power of quantum systems when applied to traditional problems (supercooperation), in a fun way
 
 ## Rules of the Game
-*
+* There are multiple levels. In each one, you start off with a few dollar bills you found on the ground, and your goal is to increase your net_worth to some dollar figure by getting bills approved by the bank. 
+
+* You are presented with a series of menus. You can select a bill and then choose to 
+  1. Make a copy with the same serial number and your choice of qubits 
+  2. Measure a specific qubit from the bill
+  3. Send the bill to the bank for verification
+  
+* If you send a bill to the bank and it is approved, your net worth goes up by that bill's value and you lose the bill. If it is denied, various things happen depending on the level: you might initially get it back, but by the end of it, you get fresh bills back and you go to jail after a limited number of failures.
+
+We planned on having 5 levels:
+* Level 0: One qubit on each bill, centralized bank returns invalidated bills, unlimited attempts
+  * Encouraged attack: guess qubit state
+  
+* Level 1: Many qubits, centralized bank returns invalidated bills, unlimited attempts
+  * Encouraged attack: use information from changes due to bank measurement to determine state with certainty
+  
+* Level 2: Many qubits, centralized bank returns invalidated bills, limited wrong attempts
+  * Encouraged attack: same but more carefully
+  
+* Level 3: Many qubits, centralized bank destroys invalidated bills and returns fresh bills, one wrong attempt
+  * Encouraged attack: The Elizer Vaideman Bomb attack using R_theta gates with the user's choice of theta
+  
+* Level 4: Many qubits, public key money, one wrong attempt
+  * Last resort level - do you take the risk and try your luck at breaking cryptographic problems, or do you retire in comfort with what you have?
 
 ## Inner Workings
 * Ideally, we would have liked to implement this using Qiskit, but the language provides no simple way of storing and moving quantum states between circuits. Qiskit is made for predefining circuits and then running them; we needed to make measurements on the fly as the user gave input. Because of this, we use simple simulation with numpy matrices and vectors.
 * For the most part, our qubits stay in 4 basic states: |0>, |1>, |+>, and |->. To simulate these, we have a Qubit class which stores state as a numpy vector. This class has a method to measure and probabilistically collapse a state. To simulate a measurement in another basis, you specify a change of basis to perform before and after the measurement.
 * The bank is represented by a ledger and a single verification function
 * Then, the majority of the code manages the user interface, providing educational menu selections and alerts for the user to respond to.
+
 ## Notable Results
 *
 
 ## Next Steps
-We planned on having 6 levels:
-* Level 0: One qubit on each bill, centralized bank returns invalidated bills, unlimited attempts
-  * Encouraged attack: guess qubit state
-* Level 1: Many qubits, centralized bank returns invalidated bills, unlimited attempts
-  * Encouraged attack: use information from changes due to bank measurement to determine state with certainty
-* Level 2: Many qubits, centralized bank returns invalidated bills, limited wrong attempts
-  * Encouraged attack: same but more carefully
-* Level 3: Many qubits, centralized bank destroys invalidated bills and returns fresh bills, unlimited attempts
-  * Encouraged attack: The Elizer Vaideman Bomb attack using R_theta gates with the user's choice of theta
-* Level 4: Many qubits, public key money
-* Level 5: Last resort level - do you take the risk and try your luck at breaking cryptographic problems, or do you retire in comfort with what you have?
-Our next steps would be fully realizing all 6 levels, increasing the value of the bills being conterfeited until you're a millionaire.
+Our next steps would be fully realizing all 6 levels, increasing the value of the bills being conterfeited until you're a millionaire. We especially wanted to make it possible for the player to come up with the EV Bomb attack by leading them to the solution as they ran out of bills..
 
 ## Citations
 * https://www.scottaaronson.com/qclec.pdf
