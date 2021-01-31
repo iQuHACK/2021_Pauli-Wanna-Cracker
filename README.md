@@ -9,7 +9,7 @@ local realism-violating abilities! You make fast friends with some of them, but 
 Do you have what it takes to become master of quantum gates and measure 'em all?
 ## Introduction
 Game theory in its essence is communication of information between different parties. Classical game theory is a well established field, where the solutions are well-known. With the advent of quantum communication, we now have access to alternative solutions to these games. The ability to have entanglement in the initial states, and superposition of strategies on the initial states, makes game theory more interesting. Here we explore the quantum version of the classical prisoner's dilemma.
-In classical prisoner's dilemma, the two parties choose to protect themselves, in other words maximize their gain (payoff) at the expense of the other participant. The catch is that even though it appears as the most optimal strategy to both parties, they end up doing worse. In [1] it has been showed that both parties can escape if they both use quantum strategies, which are quantum resources such as entanglement under unitary rotations. In particular, a "supercooperation" strategy emerges which is a Nash equilibrium in highly entangled games. Through our game we demonstrate a behavior where if both parties use quantum startegies, they can attain a higher payoff compared to their classical counterparts.
+In classical prisoner's dilemma, the two parties choose to protect themselves, in other words maximize their gain (payoff) at the expense of the other participant. The catch is that even though it appears as the most optimal strategy to both parties, they end up doing worse. In [1] it has been showed that both parties can escape if they both use quantum strategies, which are quantum resources such as entanglement under unitary rotations. In particular, a "supercooperation" strategy emerges which is a Nash equilibrium in highly entangled games. Through our game we demonstrate a behavior where if both parties use quantum strategies, they can attain a higher payoff compared to their classical counterparts.
 
 ## How to Play
 * Two players are each assigned a "quantumon" which they control every round. Remember which one is yours!
@@ -68,9 +68,9 @@ dottum_0: ┤1            ├┤ X ├┤ Y ├─────┤1        ├
 # Wiesner's Thievers: Fake It 'Til You Make It!
 
 ## Introduction
-Here in Wiesnerville, we had a rampant counterfeiting problem. The issue was that classical information is just too easy to copy, too easy to fake. We heard that the No-Cloning Theorem prevents anyone from copying a quantum state, and our scientists got to work. Now, every dollar bill has a monetary value ($1, $10, etc.), a unique serial number, AND a quantum state embedded in the fabric of the bill. Bada bing, bada boom: uncopiable money! Problem solved, right? 
+Here in Wiesnerville, we had a rampant counterfeiting problem. The issue was that classical information is just too easy to copy, too easy to fake. We heard that the No-Cloning Theorem prevents anyone from copying a quantum state, and our scientists got to work. Now, every dollar bill has a monetary value ($1, $10, etc.), a unique serial number, AND a quantum state embedded in the fabric of the bill. Bada bing, bada boom: uncopiable money! Problem solved, right?
 
-The state on each bill comes in a special form: it will always be a product state composed of |0>, |1>, |+>, and |->. We don't want any fake bills being used, so every time a Wiesnerville resident tries to buy something, they have to mail their bill to the Wiesner Central Bank to verify that it's the real deal. After the bank checks the bill, we'll add money to your net worth if it's verified and send the bill back to you if isn't. 
+The state on each bill comes in a special form: it will always be a product state composed of |0>, |1>, |+>, and |->. We don't want any fake bills being used, so every time a Wiesnerville resident tries to buy something, they have to mail their bill to the Wiesner Central Bank to verify that it's the real deal. After the bank checks the bill, we'll add money to your net worth if it's verified and send the bill back to you if isn't.
 
 At the bank, we keep a ledger - a list of every bill's serial number, and the secret true identity of the state on that bill. Here's what one row of that top-secret ledger might look like:
 
@@ -79,28 +79,28 @@ At the bank, we keep a ledger - a list of every bill's serial number, and the se
 Now, your job is to get filthy rich. You found a few dollars on the floor and you happen to own a dollar printing factory - find a way to fool the bank into accepting fake bills!
 
 ## Rules of the Game
-* There are multiple levels. In each one, you start off with a few dollar bills you found on the ground, and your goal is to increase your net_worth to some dollar figure by getting bills approved by the bank. 
+* There are multiple levels. In each one, you start off with a few dollar bills you found on the ground, and your goal is to increase your net_worth to some dollar figure by getting bills approved by the bank.
 
-* You are presented with a series of menus. You can select a bill and then choose to 
-  1. Make a copy with the same serial number and your choice of qubits 
+* You are presented with a series of menus. You can select a bill and then choose to
+  1. Make a copy with the same serial number and your choice of qubits
   2. Measure a specific qubit from the bill
   3. Send the bill to the bank for verification
-  
+
 * If you send a bill to the bank and it is approved, your net worth goes up by that bill's value and you lose the bill. If it is denied, various things happen depending on the level: you might initially get it back, but by the end of it, you get fresh bills back and you go to jail after a limited number of failures.
 
 We planned on having 5 levels:
 * Level 0: One qubit on each bill, centralized bank returns invalidated bills, unlimited attempts
   * Encouraged attack: guess qubit state
-  
+
 * Level 1: Many qubits, centralized bank returns invalidated bills, unlimited attempts
   * Encouraged attack: use information from changes due to bank measurement to determine state with certainty
-  
+
 * Level 2: Many qubits, centralized bank returns invalidated bills, limited wrong attempts
   * Encouraged attack: same but more carefully
-  
+
 * Level 3: Many qubits, centralized bank destroys invalidated bills and returns fresh bills, one wrong attempt
   * Encouraged attack: The Elizer Vaideman Bomb attack using R_theta gates with the user's choice of theta
-  
+
 * Level 4: Many qubits, public key money, one wrong attempt
   * Last resort level - do you take the risk and try your luck at breaking cryptographic problems, or do you retire in comfort with what you have?
 
@@ -111,7 +111,7 @@ We planned on having 5 levels:
 * Then, the majority of the code manages the user interface, providing educational menu selections and alerts for the user to respond to.
 
 ## Notable Results
-* The game serves to introduce players to the concept of quantum money and then to build upon that knowledge. It is accessible to both players with no prior quantum computing exposure and players who are seeking a quantum computing challenge, and it aims to bridge the gap between the two. For this reason, the levels are intentionally designed in order of increasing difficulty, with the inclusion of a comprehensive tutorial at the beginning of the initial stage.  
+* The game serves to introduce players to the concept of quantum money and then to build upon that knowledge. It is accessible to both players with no prior quantum computing exposure and players who are seeking a quantum computing challenge, and it aims to bridge the gap between the two. For this reason, the levels are intentionally designed in order of increasing difficulty, with the inclusion of a comprehensive tutorial at the beginning of the initial stage.
 * As an educational game, there weren't any new results uncovered by this, but we did notice that there aren't many quantum languages that can handle qubit operations on the fly, instead of working in the predefined circuit model. Perhaps this will improve as it becomes easier to store a quantum state coherently for longer durations.
 
 ## Next Steps
