@@ -63,29 +63,32 @@ OPTION_NAMES = ["Growl", "Tackle", "Scratch", "Slash", "Bite", "Charm"]
 rand_gates = {g: rand_gate() for g in OPTION_NAMES}
 
 
+CRAWL_TIME = 0.02
+
+
 def crawl(s):
     for letter in s:
         sys.stdout.write(letter)
         sys.stdout.flush()
-        time.sleep(.02)
+        time.sleep(CRAWL_TIME)
     print("")
 
 
 def game_over():
     print("")
     if alice_hp > bob_hp:
-        print("{} fainted!".format(bob_name))
-        print("{} wins!".format(alice_name))
+        crawl("{} fainted!".format(bob_name))
+        crawl("{} won!".format(alice_name))
     elif bob_hp > alice_hp:
-        print("{} fainted!".format(alice_name))
-        print("{} wins!".format(bob_name))
+        crawl("{} fainted!".format(alice_name))
+        crawl("{} won!".format(bob_name))
     else:
-        print("It's a draw!")
-    print("Please play again!")
+        crawl("It's a draw!")
+    crawl("Please play again!")
 
 
 def print_hp():
-    print(bcolors.HEADER + "{0: <10} [".format(alice_name) + int(alice_hp // 5)
+    print(bcolors.HEADER + bcolors.BOLD + "{0: <10} [".format(alice_name) + int(alice_hp // 5)
           * "=" + (20 - int(alice_hp // 5)) * " " + "] {:.2f}".format(alice_hp))
     print("{0: <10} [".format(bob_name) + int(bob_hp // 5) * "=" + (20 -
                                                                     int(bob_hp // 5)) * " " + "] {:.2f}".format(bob_hp) + bcolors.ENDC)
@@ -158,8 +161,17 @@ def loop():
     qc.unitary(Operator(j_hat.H), [0, 1], label="Battle")
     print(qc)
 
-    crawl("{} used {}!".format(alice_name, alice_move))
-    crawl("{} used {}!".format(bob_name, bob_move))
+    crawl("{} used {}{}!".format(alice_name, alice_move,
+                                 " to heal 5 HP" if alice_move == "Heal" else ""))
+    crawl("{} used {}{}!".format(bob_name, bob_move,
+                                 " to heal 5 HP" if bob_move == "Heal" else ""))
+
+    if alice_move == "Heal":
+        alice_hp += 5
+    if bob_move == "Heal":
+        bob_hp += 5
+    bob_hp = min(bob_hp, 100)
+    alice_hp = min(alice_hp, 100)
 
     backend = Aer.get_backend('statevector_simulator')
     job = execute(qc, backend)
@@ -181,22 +193,24 @@ def loop():
     if alice_exp == bob_exp:
         if alice_exp > 0:
             crawl(bcolors.OKGREEN +
-                  "It's a draw! Both sides heal {:.2f} damage!".format(alice_exp) + bcolors.ENDC)
+                  "It's a draw! Both sides heal {:.2f} HP!".format(alice_exp) + bcolors.ENDC)
         else:
             crawl(
-                bcolors.FAIL + "It's a draw! Both sides take {:.2f} damage!".format(abs(alice_exp)) + bcolors.ENDC)
+                bcolors.FAIL + "It's a draw! Both sides take {:.2f} HP damage!".format(abs(alice_exp)) + bcolors.ENDC)
         bob_hp += bob_exp
         alice_hp += alice_exp
-        bob_hp = min(bob_hp, 100)
-        alice_hp = min(alice_hp, 100)
+
     elif alice_exp > bob_exp:
-        crawl(bcolors.FAIL + "{} hits {} for {:.2f} damage!".format(
+        crawl(bcolors.FAIL + "{} hits {} for {:.2f} HP damage!".format(
             alice_name, bob_name, alice_exp - bob_exp) + bcolors.ENDC)
         bob_hp -= alice_exp - bob_exp
     else:
-        crawl(bcolors.FAIL + "{} hits {} for {:.2f} damage!".format(
+        crawl(bcolors.FAIL + "{} hits {} for {:.2f} HP damage!".format(
             bob_name, alice_name, bob_exp - alice_exp) + bcolors.ENDC)
         alice_hp -= bob_exp - alice_exp
+
+    bob_hp = min(bob_hp, 100)
+    alice_hp = min(alice_hp, 100)
 
     if alice_hp <= 0 or bob_hp <= 0:
         game_over()
@@ -228,4 +242,5 @@ try:
     while True:
         loop()
 except (KeyboardInterrupt, EOFError):
+    CRAWL_TIME = 0
     game_over()
