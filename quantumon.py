@@ -5,6 +5,10 @@ import scipy
 import random
 import sys
 import time
+import os
+
+
+os.system('')
 
 
 class bcolors:
@@ -74,9 +78,7 @@ def crawl(s, should_crawl=True):
 
 
 def clear_screen():
-    print(chr(27)+'[2j')
-    print('\033c')
-    print('\x1bc')
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def game_over(should_crawl=True):
@@ -154,14 +156,13 @@ def loop():
                 qc.s(q)
 
     def prompt(q):
-        while True:
-            clear_screen()
-            print_header(should_crawl=False)
+        clear_screen()
+        print_header(should_crawl=False)
+        options = tuple(random.sample(OPTION_NAMES, 3))
 
+        while True:
             print("\nWhat will {} do?".format(
                 alice_name if q == 0 else bob_name))
-
-            options = tuple(random.sample(OPTION_NAMES, 3))
 
             print("[1] Fight\t[2] Heal\t[3] Befriend")
             print("[4] {}\t[5] {}\t[6] {}".format(*options))
@@ -229,23 +230,22 @@ def loop():
     if alice_exp == bob_exp:
         if alice_exp > 0:
             msg += bcolors.OKGREEN + \
-                "It's a draw! Both sides heal {:.2f} HP!\n".format(alice_exp) \
-                + bcolors.ENDC
+                "It's a draw! Both sides heal {:.2f} HP!{}\n".format(
+                    alice_exp, bcolors.ENDC)
         else:
             msg += bcolors.FAIL + \
-                "It's a draw! Both sides take {:.2f} HP damage!\n".format(
-                    abs(alice_exp)) \
-                + bcolors.ENDC
+                "It's a draw! Both sides take {:.2f} HP damage!{}\n".format(
+                    abs(alice_exp), bcolors.ENDC)
         bob_hp += bob_exp
         alice_hp += alice_exp
 
     elif alice_exp > bob_exp:
-        msg += bcolors.FAIL + "{} hits {} for {:.2f} HP damage!\n".format(
-            alice_name, bob_name, alice_exp - bob_exp) + bcolors.ENDC
+        msg += bcolors.FAIL + "{} hits {} for {:.2f} HP damage!{}\n".format(
+            alice_name, bob_name, alice_exp - bob_exp, bcolors.ENDC)
         bob_hp -= alice_exp - bob_exp
     else:
-        msg += bcolors.FAIL + "{} hits {} for {:.2f} HP damage!\n".format(
-            bob_name, alice_name, bob_exp - alice_exp) + bcolors.ENDC
+        msg += bcolors.FAIL + "{} hits {} for {:.2f} HP damage!{}\n".format(
+            bob_name, alice_name, bob_exp - alice_exp, bcolors.ENDC)
         alice_hp -= bob_exp - alice_exp
 
     bob_hp = max(0, min(bob_hp, 100))
