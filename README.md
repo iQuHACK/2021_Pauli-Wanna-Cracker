@@ -62,6 +62,7 @@ dottum_0: ┤1            ├┤ X ├┤ Y ├─────┤1        ├
 
 1. Eisert, Jens, Martin Wilkens, and Maciej Lewenstein. "Quantum games and quantum strategies." Physical Review Letters 83.15 (1999): 3077. [arXiv:quant-ph/9806088](https://arxiv.org/abs/quant-ph/9806088)
 2. Li, Angsheng, and Xi Yong. "[Entanglement guarantees emergence of cooperation in quantum prisoner's dilemma games on networks.](https://www.nature.com/articles/srep06286)" Scientific reports 4.1 (2014): 1-7
+3. Benjamin, Simon C., and Patrick M. Hayden. "Multiplayer quantum games." Physical Review A 64.3 (2001): 030301.[arXiv:quant-ph/0007038](https://arxiv.org/abs/quant-ph/0007038)
 
 
 # Wiesner's Thievers: Fake It 'Til You Make It!
