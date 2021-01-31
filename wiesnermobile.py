@@ -190,9 +190,8 @@ def measure_bill(bill):
     alert(f"Result: {BASIC_KET_STRINGS[basis*2 + is_oneish]}")
 
 first_time_success = True
-first_time_failure = True
 def verify_bill(bill):
-    global first_time_success, first_time_failure, bill_options
+    global first_time_success, bill_options
     print_lines("The bank is checking your bill...")
     time.sleep(1)
     if verify_with_bank(bill):
@@ -202,13 +201,13 @@ def verify_bill(bill):
         bill_options[2] = "Cash it out at the bank"
     else:
         alert("No luck. The bill was rejected but at least it's back in your wallet. "
-        + first_time_failure*"\nPerhaps the measurements done by the bank have changed the state?")
-        first_time_failure = False
+        + "\nPerhaps the measurements done by the bank have changed the state?")
 
 bill_options = [
     "Print a copy with the same serial number",
     "Measure a qubit",
-    "Cash it out at the bank (This will increase your net worth, but you will no longer have the bill if it is validated.)"
+    "Cash it out at the bank (This will increase your net worth, but you will no longer have the bill if it is validated.)",
+    
 ]
 bill_actions = [
     lambda bill: copy_bill(bill),
