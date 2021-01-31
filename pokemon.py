@@ -44,7 +44,7 @@ def payoff(alice, bob):
         return (-10, -10)
 
 
-PLAYER_NAMES = ['Bulbasaur', 'Charmander', 'Squirtle', 'Pikachu']
+PLAYER_NAMES = ['Supercon', 'Iontra', 'Dottum', 'Optica']
 random.shuffle(PLAYER_NAMES)
 alice_name, bob_name = PLAYER_NAMES[0], PLAYER_NAMES[1]
 
@@ -63,41 +63,66 @@ OPTION_NAMES = ["Growl", "Tackle", "Scratch", "Slash", "Bite", "Charm"]
 rand_gates = {g: rand_gate() for g in OPTION_NAMES}
 
 
-CRAWL_TIME = 0.02
-
-
-def crawl(s):
+def crawl(s, should_crawl=True):
     for letter in s:
         sys.stdout.write(letter)
         sys.stdout.flush()
-        time.sleep(CRAWL_TIME)
-    print("")
+        if should_crawl:
+            time.sleep(0.02)
+    if s[-1] != "\n":
+        print("")
 
 
-def game_over():
-    print("")
+def clear_screen():
+    print(chr(27)+'[2j')
+    print('\033c')
+    print('\x1bc')
+
+
+def game_over(should_crawl=True):
     if alice_hp > bob_hp:
-        crawl("{} fainted!".format(bob_name))
-        crawl("{} won!".format(alice_name))
+        crawl("{} fainted!".format(bob_name), should_crawl)
+        crawl("{} won!".format(alice_name), should_crawl)
     elif bob_hp > alice_hp:
-        crawl("{} fainted!".format(alice_name))
-        crawl("{} won!".format(bob_name))
+        crawl("{} fainted!".format(alice_name), should_crawl)
+        crawl("{} won!".format(bob_name), should_crawl)
     else:
-        crawl("It's a draw!")
-    crawl("Please play again!")
+        crawl("It's a draw!", should_crawl)
+    crawl("Please play again!", should_crawl)
 
 
 def print_hp():
     print(bcolors.HEADER + bcolors.BOLD + "{0: <10} [".format(alice_name) + int(alice_hp // 5)
           * "=" + (20 - int(alice_hp // 5)) * " " + "] {:.2f}".format(alice_hp))
-    print("{0: <10} [".format(bob_name) + int(bob_hp // 5) * "=" + (20 -
-                                                                    int(bob_hp // 5)) * " " + "] {:.2f}".format(bob_hp) + bcolors.ENDC)
+    print("{0: <10} [".format(bob_name) + int(bob_hp // 5) * "=" +
+          (20 - int(bob_hp // 5)) * " " + "] {:.2f}".format(bob_hp) + bcolors.ENDC)
+
+
+friendliness = 0
+
+
+def print_header(should_crawl=True):
+    print_hp()
+
+    if friendliness < 0.1:
+        crawl("It's like an awkward first encounter...",
+              should_crawl)
+    elif friendliness < 0.3:
+        crawl("Have these two met before?", should_crawl)
+    elif friendliness < 0.5:
+        crawl("Feels like an old reunion.", should_crawl)
+    elif friendliness < 0.7:
+        crawl("Friendship is in the air!", should_crawl)
+    else:
+        crawl("You can feel friendship all around you!",
+              should_crawl)
 
 
 def loop():
     global alice_hp
     global bob_hp
     global GAMMA
+    global friendliness
 
     qc = QuantumCircuit(QuantumRegister(1, alice_name.lower()),
                         QuantumRegister(1, bob_name.lower()))
@@ -130,6 +155,9 @@ def loop():
 
     def prompt(q):
         while True:
+            clear_screen()
+            print_header(should_crawl=False)
+
             print("\nWhat will {} do?".format(
                 alice_name if q == 0 else bob_name))
 
@@ -156,15 +184,21 @@ def loop():
                 print("Please enter an option number.")
                 continue
 
-    alice_move = prompt(0)
-    bob_move = prompt(1)
-    qc.unitary(Operator(j_hat.H), [0, 1], label="Battle")
-    print(qc)
+    if random.choice([True, False]):
+        alice_move = prompt(0)
+        bob_move = prompt(1)
+    else:
+        bob_move = prompt(1)
+        alice_move = prompt(0)
+    clear_screen()
 
-    crawl("{} used {}{}!".format(alice_name, alice_move,
-                                 " to heal 5 HP" if alice_move == "Heal" else ""))
-    crawl("{} used {}{}!".format(bob_name, bob_move,
-                                 " to heal 5 HP" if bob_move == "Heal" else ""))
+    qc.unitary(Operator(j_hat.H), [0, 1], label="Battle")
+
+    msg = ""
+    msg += "{} used {}{}!\n".format(alice_name, alice_move,
+                                    " to heal 5 HP" if alice_move == "Heal" else "")
+    msg += "{} used {}{}!\n".format(bob_name, bob_move,
+                                    " to heal 5 HP" if bob_move == "Heal" else "")
 
     if alice_move == "Heal":
         alice_hp += 5
@@ -186,61 +220,63 @@ def loop():
         alice_exp += prob * alice
         bob_exp += prob * bob
 
-    if alice_move == "Befriend" and bob_move not in ("Befriend", "Heal") and alice_exp > bob_exp or bob_move == "Befriend" and alice_move not in ("Befriend", "Heal") and bob_exp > alice_exp:
-        crawl(bcolors.OKCYAN + bcolors.BOLD +
-              "It's the power of friendship!" + bcolors.ENDC)
+    if alice_move == "Befriend" and bob_move not in ("Befriend", "Heal") \
+            and alice_exp > bob_exp or bob_move == "Befriend" \
+            and alice_move not in ("Befriend", "Heal") and bob_exp > alice_exp:
+        msg += bcolors.OKCYAN + bcolors.BOLD + \
+            "It's the power of friendship!\n" + bcolors.ENDC
 
     if alice_exp == bob_exp:
         if alice_exp > 0:
-            crawl(bcolors.OKGREEN +
-                  "It's a draw! Both sides heal {:.2f} HP!".format(alice_exp) + bcolors.ENDC)
+            msg += bcolors.OKGREEN + \
+                "It's a draw! Both sides heal {:.2f} HP!\n".format(alice_exp) \
+                + bcolors.ENDC
         else:
-            crawl(
-                bcolors.FAIL + "It's a draw! Both sides take {:.2f} HP damage!".format(abs(alice_exp)) + bcolors.ENDC)
+            msg += bcolors.FAIL + \
+                "It's a draw! Both sides take {:.2f} HP damage!\n".format(
+                    abs(alice_exp)) \
+                + bcolors.ENDC
         bob_hp += bob_exp
         alice_hp += alice_exp
 
     elif alice_exp > bob_exp:
-        crawl(bcolors.FAIL + "{} hits {} for {:.2f} HP damage!".format(
-            alice_name, bob_name, alice_exp - bob_exp) + bcolors.ENDC)
+        msg += bcolors.FAIL + "{} hits {} for {:.2f} HP damage!\n".format(
+            alice_name, bob_name, alice_exp - bob_exp) + bcolors.ENDC
         bob_hp -= alice_exp - bob_exp
     else:
-        crawl(bcolors.FAIL + "{} hits {} for {:.2f} HP damage!".format(
-            bob_name, alice_name, bob_exp - alice_exp) + bcolors.ENDC)
+        msg += bcolors.FAIL + "{} hits {} for {:.2f} HP damage!\n".format(
+            bob_name, alice_name, bob_exp - alice_exp) + bcolors.ENDC
         alice_hp -= bob_exp - alice_exp
 
-    bob_hp = min(bob_hp, 100)
-    alice_hp = min(alice_hp, 100)
+    bob_hp = max(0, min(bob_hp, 100))
+    alice_hp = max(0, min(alice_hp, 100))
+
+    print_hp()
+    print(qc)
+    print("")
+    crawl(msg)
 
     if alice_hp <= 0 or bob_hp <= 0:
         game_over()
         sys.exit(0)
 
-    print("")
-    print_hp()
-
     friendliness = min(max(abs(alice_hp - bob_hp) / 50,
                            1 - max(alice_hp, bob_hp) / 50), 1)
     GAMMA = friendliness * np.pi / 2
-    if friendliness < 0.1:
-        crawl("It's like an awkward first encounter...")
-    elif friendliness < 0.3:
-        crawl("Have these two met before?")
-    elif friendliness < 0.5:
-        crawl("Feels like an old reunion.")
-    elif friendliness < 0.7:
-        crawl("Friendship is in the air!")
-    else:
-        crawl("You can feel friendship all around you!")
+
+    time.sleep(2)
+    clear_screen()
+    print_header()
 
 
 try:
     crawl(bcolors.OKGREEN + bcolors.BOLD +
-          "A wild quantum state appeared!\n{} VS {}".format(alice_name, bob_name) + bcolors.ENDC)
+          "A wild quantum state appeared!" + bcolors.ENDC)
+
+    time.sleep(0.5)
 
     print_hp()
     while True:
         loop()
 except (KeyboardInterrupt, EOFError):
-    CRAWL_TIME = 0
-    game_over()
+    game_over(should_crawl=False)
