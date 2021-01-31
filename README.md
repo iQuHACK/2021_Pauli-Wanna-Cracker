@@ -111,7 +111,7 @@ We planned on having 5 levels:
 * Then, the majority of the code manages the user interface, providing educational menu selections and alerts for the user to respond to.
 
 ## Notable Results
-* The game serves to introduce players to the concept of quantum money and then to build upon that knowledge. Tt is accessible to both players with no prior quantum computing exposure and players who are seeking a quantum computing challenge, and it aims to bridge the gap between the two. For this reason, the levels are intentionally designed in order of increasing difficulty, with the inclusion of a comprehensive tutorial at the beginning of the initial stage.  
+* The game serves to introduce players to the concept of quantum money and then to build upon that knowledge. It is accessible to both players with no prior quantum computing exposure and players who are seeking a quantum computing challenge, and it aims to bridge the gap between the two. For this reason, the levels are intentionally designed in order of increasing difficulty, with the inclusion of a comprehensive tutorial at the beginning of the initial stage.  
 * As an educational game, there weren't any new results uncovered by this, but we did notice that there aren't many quantum languages that can handle qubit operations on the fly, instead of working in the predefined circuit model. Perhaps this will improve as it becomes easier to store a quantum state coherently for longer durations.
 
 ## Next Steps
@@ -120,5 +120,6 @@ Our next steps would be fully realizing all 5 levels, increasing the value of th
 We also would like to make sure the pacing and difficulty is balanced well over the levels. Playtesting should help find the optimal goals and bill amounts per level.
 
 ## Citations
+* Wiesner, Stephen (1983-01-01). "Conjugate Coding". SIGACT News. 15 (1): 78–88. doi:10.1145/1008908.1008920. ISSN 0163-5700.
 * https://www.scottaaronson.com/qclec.pdf
 
