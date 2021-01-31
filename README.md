@@ -8,7 +8,7 @@ In the lush quantum fields of Shor Town, your laid-back, classical lifestyle has
 local realism-violating abilities! You make fast friends with some of them, but the others threaten to entangle themselves in your affairs.
 Do you have what it takes to become master of quantum gates and measure 'em all?
 ## Introduction
-Game theory in its essence is communication of information between different parties. Classical game theroy is a well established field, where the solutions are well known. With the advent of quantum communication, we now have access to alternative solutions to these games. The ability to have entabglement in the initial states, and superposition of strategies on the initial states, makes game theory more interesting. Here we explore the quantum version of the classical prisoner's dilemma. 
+Game theory in its essence is communication of information between different parties. Classical game theroy is a well established field, where the solutions are well known. With the advent of quantum communication, we now have access to alternative solutions to these games. The ability to have entanglement in the initial states, and superposition of strategies on the initial states, makes game theory more interesting. Here we explore the quantum version of the classical prisoner's dilemma. 
 In classical prisoner's dilemma, the two parties choose to protect themselves, in other words maximize their gain (payoff) at the expense of the other participant. The catch is that even though it appears as the most optimal strategy to both parties, they end up doing worse. In [1] it has been showed that both parties can escape if they both use quantum startegies, which are quantum resources such as entanglement under unitary rotations. Through our game we show that both if both parties use quantum startegies, they can attain a higher payoff compared to their classical counterparts. 
 
 ## How to Play
@@ -56,7 +56,7 @@ dottum_0: ┤1            ├┤ X ├┤ Y ├─────┤1        ├
 
 ## Citations
 
-Eisert, Jens, Martin Wilkens, and Maciej Lewenstein. "Quantum games and quantum strategies." Physical Review Letters 83.15 (1999): 3077. [arXiv:quant-ph/9806088](https://arxiv.org/abs/quant-ph/9806088)
+[1] Eisert, Jens, Martin Wilkens, and Maciej Lewenstein. "Quantum games and quantum strategies." Physical Review Letters 83.15 (1999): 3077. [arXiv:quant-ph/9806088](https://arxiv.org/abs/quant-ph/9806088).
 
 # Wiesner's Thievers: Fake It 'Til You Make It!
 
