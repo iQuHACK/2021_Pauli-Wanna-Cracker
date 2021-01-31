@@ -64,8 +64,14 @@ dottum_0: ┤1            ├┤ X ├┤ Y ├─────┤1        ├
 # Wiesner's Thievers: Fake It 'Til You Make It!
 
 ## Introduction
-Here in Wiesnerville, we had a rampant counterfeiting problem. The issue was that classical information is just too easy to copy, too easy to fake. We heard that the No-Cloning Theorem prevents anyone from copying a quantum state, and our scientists got to work. Now, every dollar bill has a monetary value ($1, $10, etc.), a unique serial number, AND a quantum state embedded in the fabric of the bill. Bada bing, bada boom: uncopiable money! Problem solved, right? This state comes in a special form: it will always be a product state composed of |0>, |1>, |+>, and |->. We don't want any fake bills being used, so every time a Wiesnerville resident tries to buy something, they have to mail their bill to the Wiesner Central Bank to verify that it's the real deal. After the bank checks the bill, we'll add money to your net worth if it's verified and send the bill back to you if isn't. At the bank, we keep a ledger - a list of every bill's serial number, and the secret true identity of the state on that bill. Here's what one row of that top-secret ledger might look like:
+Here in Wiesnerville, we had a rampant counterfeiting problem. The issue was that classical information is just too easy to copy, too easy to fake. We heard that the No-Cloning Theorem prevents anyone from copying a quantum state, and our scientists got to work. Now, every dollar bill has a monetary value ($1, $10, etc.), a unique serial number, AND a quantum state embedded in the fabric of the bill. Bada bing, bada boom: uncopiable money! Problem solved, right? 
+
+The state on each bill comes in a special form: it will always be a product state composed of |0>, |1>, |+>, and |->. We don't want any fake bills being used, so every time a Wiesnerville resident tries to buy something, they have to mail their bill to the Wiesner Central Bank to verify that it's the real deal. After the bank checks the bill, we'll add money to your net worth if it's verified and send the bill back to you if isn't. 
+
+At the bank, we keep a ledger - a list of every bill's serial number, and the secret true identity of the state on that bill. Here's what one row of that top-secret ledger might look like:
+
     Bill #0198308187: |1>|->|+>|0>|->
+
 Now, your job is to get filthy rich. You found a few dollars on the floor and you happen to own a dollar printing factory - find a way to fool the bank into accepting fake bills!
 
 ## Rules of the Game
