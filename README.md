@@ -3,19 +3,27 @@
 In the lush quantum fields of Shor Town, your laid-back, classical lifestyle has suddenly been turned upside-down by a gang of newcomers with amazing,
 local realism-violating abilities! You make fast friends with some of them, but the others threaten to entangle themselves in your affairs.
 Do you have what it takes to become master of quantum gates and measure 'em all?
+
+To play, type this and follow the prompts:
+```
+python quantumon.py
+```
+
 ## Introduction
 * Theoretical developments in quantum computing
 * Classical game theory - the prisoner's dilemma problem
 * Motivation: demonstrating the extra power of quantum systems when applied to traditional problems (supercooperation), in a fun way
 
-## Rules of the Game
-* Two player game
-* Each player is randomly assigned a "quantumon"
-* Each quantumon starts with 100 HP (health points)
-* Every turn, both players can pick one of 6 moves to heal or deal damage
-* As the game progresses, a mysterious `friendliness` value is updated
-* The game ends when one of the quantumon reaches 0 HP and faints
+## How to Play
+Two players are each assigned a "quantumon" which they control every round. Remember which one is yours!
 
+Every round, each quantumon picks one of six moves, specified by typing a number at the prompt. Which player goes first on any given round is determined randomly.
+
+When both players have picked, the combination of moves will affect the HP of the two quantumon. A quantumon's HP starts the game at the maximum value of 100 HP, and when one quantumon reaches 0 HP it will faint and its opponent will win.
+
+The moves that the player can choose are partly randomized, making each round slightly different! Try each of the moves and keep track of what their effects are, and see if you can uncover the true identity of each of the moves!
+
+As the game progresses, a mysterious feeling of "friendliness" begins to fill the air. What could this feeling be, and how does it affect the moves? In the quantum world, the power of "friendship" can work miracles!
 ## Inner Workings
 * [Include illustration of circuit (?)]
 * The game works by running a quantum circuit with two qubits, one for each player
