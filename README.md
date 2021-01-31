@@ -66,16 +66,17 @@ dottum_0: ┤1            ├┤ X ├┤ Y ├─────┤1        ├
 
 
 # Wiesner's Thievers: Fake It 'Til You Make It!
-Here in Wiesnerville, we had a rampant counterfeiting problem. The issue was that classical information is just too easy to copy, too easy to fake. We heard that the No-Cloning Theorem prevents anyone from copying a quantum state, and our scientists got to work. Now, every dollar bill has a monetary value ($1, $10, etc.), a unique serial number, AND a quantum state embedded in the fabric of the bill. Bada bing, bada boom: uncopiable money! Problem solved, right? 
 
 ## Introduction
+Here in Wiesnerville, we had a rampant counterfeiting problem. The issue was that classical information is just too easy to copy, too easy to fake. We heard that the No-Cloning Theorem prevents anyone from copying a quantum state, and our scientists got to work. Now, every dollar bill has a monetary value ($1, $10, etc.), a unique serial number, AND a quantum state embedded in the fabric of the bill. Bada bing, bada boom: uncopiable money! Problem solved, right? 
+
 The state on each bill comes in a special form: it will always be a product state composed of |0>, |1>, |+>, and |->. We don't want any fake bills being used, so every time a Wiesnerville resident tries to buy something, they have to mail their bill to the Wiesner Central Bank to verify that it's the real deal. After the bank checks the bill, we'll add money to your net worth if it's verified and send the bill back to you if isn't. 
 
 At the bank, we keep a ledger - a list of every bill's serial number, and the secret true identity of the state on that bill. Here's what one row of that top-secret ledger might look like:
 
     Bill #0198308187: |1>|->|+>|0>|->
 
-Now, your job is to get filthy rich. You found a few dollars on the floor and you happen to own a dollar printing factory - find a way to fool the bank into accepting fake bills! As the levels progress, Wiesner's scheme becomes more sophisticated, and harder to fool. Can you make it to the end without getting caught?
+Now, your job is to get filthy rich. You found a few dollars on the floor and you happen to own a dollar printing factory - find a way to fool the bank into accepting fake bills!
 
 ## Rules of the Game
 * There are multiple levels. In each one, you start off with a few dollar bills you found on the ground, and your goal is to increase your net_worth to some dollar figure by getting bills approved by the bank. 
@@ -84,7 +85,6 @@ Now, your job is to get filthy rich. You found a few dollars on the floor and yo
   1. Make a copy with the same serial number and your choice of qubits 
   2. Measure a specific qubit from the bill
   3. Send the bill to the bank for verification
-  3. Discard the bill
   
 * If you send a bill to the bank and it is approved, your net worth goes up by that bill's value and you lose the bill. If it is denied, various things happen depending on the level: you might initially get it back, but by the end of it, you get fresh bills back and you go to jail after a limited number of failures.
 
@@ -106,15 +106,13 @@ We planned on having 5 levels:
 
 ## Inner Workings
 * Ideally, we would have liked to implement this using Qiskit, but the language provides no simple way of storing and moving quantum states between circuits. Qiskit is made for predefining circuits and then running them; we needed to make measurements on the fly as the user gave input. Because of this, we use simple simulation with numpy matrices and vectors.
-
 * For the most part, our qubits stay in 4 basic states: |0>, |1>, |+>, and |->. To simulate these, we have a Qubit class which stores state as a numpy vector. This class has a method to measure and probabilistically collapse a state. To simulate a measurement in another basis, you specify a change of basis to perform before and after the measurement.
-
 * The bank is represented by a ledger and a single verification function
-
 * Then, the majority of the code manages the user interface, providing educational menu selections and alerts for the user to respond to.
 
 ## Notable Results
-As an educational game, there weren't new results uncovered by this, but we did notice that there aren't many quantum languages that can handle qubit operations on the fly, instead of working in the predefined circuit model. Perhaps this will improve as it becomes easier to store a quantum state coherently for longer durations.
+* The game serves to introduce players to the concept of quantum money and then to build upon that knowledge. Tt is accessible to both players with no prior quantum computing exposure and players who are seeking a quantum computing challenge, and it aims to bridge the gap between the two. For this reason, the levels are intentionally designed in order of increasing difficulty, with the inclusion of a comprehensive tutorial at the beginning of the initial stage.  
+* As an educational game, there weren't any new results uncovered by this, but we did notice that there aren't many quantum languages that can handle qubit operations on the fly, instead of working in the predefined circuit model. Perhaps this will improve as it becomes easier to store a quantum state coherently for longer durations.
 
 ## Next Steps
 Our next steps would be fully realizing all 5 levels, increasing the value of the bills being conterfeited until the player becomes a millionaire. We especially wanted to make it possible for the player to come up with the EV Bomb attack themselves by leading them to the solution as they ran out of bills.
@@ -122,6 +120,5 @@ Our next steps would be fully realizing all 5 levels, increasing the value of th
 We also would like to make sure the pacing and difficulty is balanced well over the levels. Playtesting should help find the optimal goals and bill amounts per level.
 
 ## Citations
-* Wiesner, Stephen (1983-01-01). "Conjugate Coding". SIGACT News. 15 (1): 78–88. doi:10.1145/1008908.1008920. ISSN 0163-5700.
 * https://www.scottaaronson.com/qclec.pdf
 
