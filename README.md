@@ -1,7 +1,8 @@
-(Note: this is a draft, please feel free to add + edit)
+# Quantumon: Gotta Measure 'Em All!
 
-# Quantumon
-
+In the lush quantum fields of Shor Town, your laid-back, classical lifestyle has suddenly been turned upside-down by a gang of newcomers with amazing,
+local realism-violating abilities! You make fast friends with some of them, but the others threaten to entangle themselves in your affairs.
+Do you have what it takes to become master of quantum gates and measure 'em all?
 ## Introduction
 * Theoretical developments in quantum computing
 * Classical game theory - the prisoner's dilemma problem
@@ -11,7 +12,7 @@
 * Two player game
 * Each player is randomly assigned a "quantumon"
 * Each quantumon starts with 100 HP (health points)
-* Every turn, both players can pick one of 6 moves to heal or deal damage 
+* Every turn, both players can pick one of 6 moves to heal or deal damage
 * As the game progresses, a mysterious `friendliness` value is updated
 * The game ends when one of the quantumon reaches 0 HP and faints
 
@@ -24,26 +25,26 @@
   * [Include unitary formula in terms of angles (?)]
   * The first two moves are equivalents of the options "defect" and "cooperate" in the classical prisoner's dilemma [list the angle values, gates]
   * The third move is a "supercooperate" option that is exclusive to a quantum version of the prisoner's dilemma [list the angle values, gates]
-  * To make things even more interesting, the remaining three moves randomly combine the available single-qubit gates for an unpredictable effect 
-  * 
-* 
+  * To make things even more interesting, the remaining three moves randomly combine the available single-qubit gates for an unpredictable effect
+  *
+*
 * [Elaboration on the supercooperating "befriend" option]
-* 
-* Mechanics of `friendliness` 
+*
+* Mechanics of `friendliness`
   * Friendliness increases when a quantumon has lost considerable health
-  * The higher the friendlines value, the more powerful the quantum aspect of the `befriend` option becomes 
+  * The higher the friendlines value, the more powerful the quantum aspect of the `befriend` option becomes
     * When `friendliness` is 0, the game is entirely separable (classical)
     * When `friendliness` reaches 1, the game becomes maximally entangled (quantum)
   * Purpose:
     * Gradually introduces the player to quantum mechanics
     * Transitions the game from a classical to a quantum one depending on the progress of the game
-* 
-* 
+*
+*
 
 ## Notable Results
 * Exploration of supercooperation
 * Running the circuit on different backends/simulators
-* 
+*
 
 
 ## Next Steps
