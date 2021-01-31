@@ -63,11 +63,10 @@ dottum_0: ┤1            ├┤ X ├┤ Y ├─────┤1        ├
 
 # Wiesner's Thievers: Fake It 'Til You Make It!
 
-Wiesnerville has a counterfeiting problem. Luckily, the new mayor, a part-time quantum scientist, thinks they have a solution: quantum money. Since the no-cloning theorem prevents copying quantum states, if we put one in every dollar bill, bye bye counterfeits! Right? In this game, you work through various levels of increasing difficulty and try to cheat the bank out of as much money as you can without getting caught. Will you get away with it?
 ## Introduction
-* Theoretical developments in quantum computing
-* Classical game theory - the prisoner's dilemma problem
-* Motivation: demonstrating the extra power of quantum systems when applied to traditional problems (supercooperation), in a fun way
+Here in Wiesnerville, we had a rampant counterfeiting problem. The issue was that classical information is just too easy to copy, too easy to fake. We heard that the No-Cloning Theorem prevents anyone from copying a quantum state, and our scientists got to work. Now, every dollar bill has a monetary value ($1, $10, etc.), a unique serial number, AND a quantum state embedded in the fabric of the bill. Bada bing, bada boom: uncopiable money! Problem solved, right? This state comes in a special form: it will always be a product state composed of |0>, |1>, |+>, and |->. We don't want any fake bills being used, so every time a Wiesnerville resident tries to buy something, they have to mail their bill to the Wiesner Central Bank to verify that it's the real deal. After the bank checks the bill, we'll add money to your net worth if it's verified and send the bill back to you if isn't. At the bank, we keep a ledger - a list of every bill's serial number, and the secret true identity of the state on that bill. Here's what one row of that top-secret ledger might look like:
+    Bill #0198308187: |1>|->|+>|0>|->
+Now, your job is to get filthy rich. You found a few dollars on the floor and you happen to own a dollar printing factory - find a way to fool the bank into accepting fake bills!
 
 ## Rules of the Game
 * There are multiple levels. In each one, you start off with a few dollar bills you found on the ground, and your goal is to increase your net_worth to some dollar figure by getting bills approved by the bank. 
@@ -105,7 +104,7 @@ We planned on having 5 levels:
 As an educational game, there weren't new results uncovered by this, but we did notice that there aren't many quantum languages that can handle qubit operations on the fly, instead of working in the predefined circuit model. Perhaps this will improve as it becomes easier to store a quantum state coherently for longer durations.
 
 ## Next Steps
-Our next steps would be fully realizing all 6 levels, increasing the value of the bills being conterfeited until you're a millionaire. We especially wanted to make it possible for the player to come up with the EV Bomb attack by leading them to the solution as they ran out of bills.
+Our next steps would be fully realizing all 5 levels, increasing the value of the bills being conterfeited until the player becomes a millionaire. We especially wanted to make it possible for the player to come up with the EV Bomb attack themselves by leading them to the solution as they ran out of bills.
 
 We also would like to make sure the pacing and difficulty is balanced well over the levels. Playtesting should help find the optimal goals and bill amounts per level.
 
