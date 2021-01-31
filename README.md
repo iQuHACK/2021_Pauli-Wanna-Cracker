@@ -102,10 +102,12 @@ We planned on having 5 levels:
 * Then, the majority of the code manages the user interface, providing educational menu selections and alerts for the user to respond to.
 
 ## Notable Results
-*
+As an educational game, there weren't new results uncovered by this, but we did notice that there aren't many quantum languages that can handle qubit operations on the fly, instead of working in the predefined circuit model. Perhaps this will improve as it becomes easier to store a quantum state coherently for longer durations.
 
 ## Next Steps
-Our next steps would be fully realizing all 6 levels, increasing the value of the bills being conterfeited until you're a millionaire. We especially wanted to make it possible for the player to come up with the EV Bomb attack by leading them to the solution as they ran out of bills..
+Our next steps would be fully realizing all 6 levels, increasing the value of the bills being conterfeited until you're a millionaire. We especially wanted to make it possible for the player to come up with the EV Bomb attack by leading them to the solution as they ran out of bills.
+
+We also would like to make sure the pacing and difficulty is balanced well over the levels. Playtesting should help find the optimal goals and bill amounts per level.
 
 ## Citations
 * https://www.scottaaronson.com/qclec.pdf
