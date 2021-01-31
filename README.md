@@ -45,9 +45,10 @@ dottum_0: ┤1            ├┤ X ├┤ Y ├─────┤1        ├
 * In practice, when entanglement is high, "Befriend" produces very interesting quantum effects. For example, the opponent's attack on a player who is choosing to "Befriend" may be reflected back on them. "Heal" can have unintuitive behavior against "Befriend", even possibly causing damage!
 
 ## Notable Results
-* Exploration of supercooperation
-* Running the circuit on different backends/simulators
-*
+
+* While the game is initially identical to the classical prisoner's dilemma, as the game progresses, the rules and optimal moves become increasingly quantum. Although they don't know it, the players are essentially building entangled quantum circuits by playing the game. For players who have not worked with quantum systems before, this provides a gentle exposure to quantum mechanics in a fun and educational manner.
+* The "supercooperation" feature of the game demonstrates the power of quantum mechanics when added to a classical system. In the classical version of the game, if an opponent chooses to "defect", the player can only choose to "cooperate" - thereby suffering a large loss - or "defect" in return - thereby causing punishing both players. However, with the intermediary quantum option of "supercooperation", it is possible to respond in a way that buffers the negative effect of an opponent who chooses to "defect" while simulatenously retaining a positive effect when an opponent chooses to "cooperate". As a result, this opens up new avenues for gameplay and provides it with greater depth.
+
 
 
 ## Next Steps
