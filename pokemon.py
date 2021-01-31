@@ -74,14 +74,21 @@ def crawl(s):
 def game_over():
     print("")
     if alice_hp > bob_hp:
-        crawl("{} fainted!".format(bob_name))
-        crawl("{} wins!".format(alice_name))
+        print("{} fainted!".format(bob_name))
+        print("{} wins!".format(alice_name))
     elif bob_hp > alice_hp:
-        crawl("{} fainted!".format(alice_name))
-        crawl("{} wins!".format(bob_name))
+        print("{} fainted!".format(alice_name))
+        print("{} wins!".format(bob_name))
     else:
-        crawl("It's a draw!")
-    crawl("Please play again!")
+        print("It's a draw!")
+    print("Please play again!")
+
+
+def print_hp():
+    print(bcolors.HEADER + "{0: <10} [".format(alice_name) + int(alice_hp // 5)
+          * "=" + (20 - int(alice_hp // 5)) * " " + "] {:.2f}".format(alice_hp))
+    print("{0: <10} [".format(bob_name) + int(bob_hp // 5) * "=" + (20 -
+                                                                    int(bob_hp // 5)) * " " + "] {:.2f}".format(bob_hp) + bcolors.ENDC)
 
 
 def loop():
@@ -196,6 +203,7 @@ def loop():
         sys.exit(0)
 
     print("")
+    print_hp()
 
     friendliness = min(max(abs(alice_hp - bob_hp) / 50,
                            1 - max(alice_hp, bob_hp) / 50), 1)
@@ -211,13 +219,12 @@ def loop():
     else:
         crawl("You can feel friendship all around you!")
 
-    crawl(bcolors.WARNING + "{} HP: {:.2f}, {} HP: {:.2f}".format(alice_name,
-                                                                  alice_hp, bob_name, bob_hp) + bcolors.ENDC)
-
 
 try:
     crawl(bcolors.OKGREEN + bcolors.BOLD +
           "A wild quantum state appeared!\n{} VS {}".format(alice_name, bob_name) + bcolors.ENDC)
+
+    print_hp()
     while True:
         loop()
 except (KeyboardInterrupt, EOFError):
