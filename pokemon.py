@@ -1,4 +1,4 @@
-from qiskit import Aer, QuantumCircuit, execute
+from qiskit import Aer, QuantumCircuit, QuantumRegister, execute
 from qiskit.quantum_info import Operator
 import numpy as np
 import scipy
@@ -28,8 +28,6 @@ def u_hat(theta, phi):
 
 d_hat = u_hat(np.pi, 0)
 
-q_hat = u_hat(0, np.pi / 2)
-
 alice_hp = 100
 bob_hp = 100
 
@@ -42,7 +40,7 @@ def payoff(alice, bob):
     if alice == 1 and bob == 0:
         return (40, 0)
     elif alice == 1 and bob == 1:
-        return (5, 5)
+        return (-10, -10)
 
 
 PLAYER_NAMES = ['Bulbasaur', 'Charmander', 'Squirtle', 'Pikachu']
@@ -50,11 +48,11 @@ random.shuffle(PLAYER_NAMES)
 alice_name, bob_name = PLAYER_NAMES[0], PLAYER_NAMES[1]
 
 OPERATIONS = ['Z', 'Y', 'X', 'H']
-random.shuffle(OPERATIONS)
 
 
 def rand_gate():
     gate = ''
+    random.shuffle(OPERATIONS)
     for i in range(random.randint(1, 4)):
         gate += OPERATIONS[i]
     return gate
@@ -79,7 +77,8 @@ def loop():
     global bob_hp
     global GAMMA
 
-    qc = QuantumCircuit(2)
+    qc = QuantumCircuit(QuantumRegister(1, alice_name.lower()),
+                        QuantumRegister(1, bob_name.lower()))
     j_hat = np.matrix(scipy.linalg.expm(
         np.kron(-1j * GAMMA * d_hat, d_hat / 2)))
     qc.unitary(Operator(j_hat), [0, 1], label="")
@@ -109,33 +108,34 @@ def loop():
 
     def prompt(q):
         while True:
-            print("What will {} do?".format(alice_name if q == 0 else bob_name))
+            print("\nWhat will {} do?".format(
+                alice_name if q == 0 else bob_name))
 
-            options = ["Fight", "Defend", "Befriend"] + \
-                list(random.sample(OPTION_NAMES, 3))
+            options = tuple(random.sample(OPTION_NAMES, 3))
 
-            for i, o in enumerate(options):
-                print("[{}] {}".format(i + 1, o))
+            print("[1] Fight\t[2] Heal\t[3] Befriend")
+            print("[4] {}\t[5] {}\t[6] {}".format(*options))
 
             result = input(bcolors.WARNING + ">>> " + bcolors.ENDC)
             try:
                 i = int(result) - 1
                 if i == 0:
                     defect(q)
+                    return "defected"
                 elif i == 1:
-                    pass
+                    return "cooperated"
                 elif i == 2:
                     quantum(q)
+                    return "quantum"
                 else:
-                    gate = rand_gates[options[i]]
-                    exec_gate(q, gate)
-            except:
+                    exec_gate(q, rand_gates[options[i - 3]])
+                    return "defected"
+            except (ValueError, IndexError):
                 print("Please enter an option number.")
                 continue
-            return
 
-    prompt(0)
-    prompt(1)
+    alice_move = prompt(0)
+    bob_move = prompt(1)
     qc.unitary(Operator(j_hat.H), [0, 1], label="")
     print(qc)
 
@@ -152,22 +152,32 @@ def loop():
         alice_exp += prob * alice
         bob_exp += prob * bob
 
+    if alice_move != bob_move and (alice_move == "defected" and alice_exp < bob_exp or bob_move == "defected" and bob_exp < alice_exp):
+        print(bcolors.OKCYAN + bcolors.BOLD +
+              "It's the power of friendship!" + bcolors.ENDC)
+
     if alice_exp == bob_exp:
-        print("It's a draw!")
+        if alice_exp > 0:
+            print(bcolors.OKGREEN +
+                  "It's a draw! Both sides heal {:.2f} damage!".format(alice_exp) + bcolors.ENDC)
+        else:
+            print(
+                bcolors.FAIL + "It's a draw! Both sides take {:.2f} damage!".format(abs(alice_exp)) + bcolors.ENDC)
         bob_hp += bob_exp
         alice_hp += alice_exp
         bob_hp = min(bob_hp, 100)
         alice_hp = min(alice_hp, 100)
     elif alice_exp > bob_exp:
-        print("{} hits {} for {:.2f} damage!".format(
-            alice_name, bob_name, alice_exp - bob_exp))
+        print(bcolors.FAIL + "{} hits {} for {:.2f} damage!".format(
+            alice_name, bob_name, alice_exp - bob_exp) + bcolors.ENDC)
         bob_hp -= alice_exp - bob_exp
     else:
-        print("{} hits {} for {:.2f} damage!".format(
-            bob_name, alice_name, bob_exp - alice_exp))
+        print(bcolors.FAIL + "{} hits {} for {:.2f} damage!".format(
+            bob_name, alice_name, bob_exp - alice_exp) + bcolors.ENDC)
         alice_hp -= bob_exp - alice_exp
 
-    friendliness = min(abs(alice_hp - bob_hp) / 50, 1)
+    friendliness = min(max(abs(alice_hp - bob_hp) / 50,
+                           1 - max(alice_hp, bob_hp) / 50), 1)
     GAMMA = friendliness * np.pi / 2
     print("Friendliness now {:.2f}".format(friendliness))
 
@@ -179,6 +189,8 @@ def loop():
 
 
 try:
+    print(bcolors.OKGREEN + bcolors.BOLD +
+          "A wild quantum state appeared!\n{} VS {}".format(alice_name, bob_name) + bcolors.ENDC)
     while True:
         loop()
 except (KeyboardInterrupt, EOFError):
